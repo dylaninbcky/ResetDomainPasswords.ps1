@@ -1,5 +1,6 @@
 $ErrorActionPreference = "Continue"
 
+
 function Invoke-ChangePasswords {
 
     param (
@@ -69,11 +70,13 @@ function Get-Passwords {
     }  
 }
 
+
 function Invoke-GenerateCSV {
     param (
         [Parameter(Mandatory=$true)]
         [string]$Wordlist,
-        [string]$OutputDirectory
+        [string]$OutputDirectory,
+        [string]$SearchBase
     )
     
     # Generate passwords, equal to the count of users
@@ -82,7 +85,12 @@ function Invoke-GenerateCSV {
     $passwords = Get-Passwords -Amount $count -Wordlist $Wordlist
     
     # Get users from AD
-    $users = Get-Aduser -Filter * -Properties pwdLastSet, name | Select-Object name, SamAccountName, pwdLastSet
+    if($SearchBase){
+        $users = Get-Aduser -Filter * -Properties pwdLastSet, name | Select-Object name, SamAccountName, pwdLastSet
+    }
+    else {
+        $users =  Get-Aduser -SearchBase $SearchBase -Filter * -Properties pwdLastSet, name | Select-Object name, SamAccountName, pwdLastSet
+    }
 
     # Add random passwords to user object
     $cnt = 0
@@ -97,10 +105,3 @@ function Invoke-GenerateCSV {
 
     Write-Host "CSV written to $OutputDirectory\UsersPasswords.csv"
 }
-
-
-
-
-
-
-
