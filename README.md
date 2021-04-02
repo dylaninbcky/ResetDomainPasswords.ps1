@@ -2,7 +2,7 @@
 PowerShell script to generate random passwords (based on a wordlist) and reset passwords of all user accounts in the domain.
 
 ### Usage 
-Import the scipt with ```Import-Module .\ResetPasswords.ps1```
+Import the scipt with ```Import-Module .\ResetDomainPasswords.ps1```
 
 Then you can use ```Invoke-GenerateCSV -Wordlist wordlist.txt -OutputDirectory C:\Users\Administrator\Desktop```. This will get all users in the domain, generate random passwords for each user and save them to "UsersPasswords.csv" in the procided directory (or current working directory if not specified). The given wordlist will be used to generate new random passwords (word + word + 2 digits = new password). The provided example a Dutch wordlist with medium-length words to prevent either too simple or too conmplex passwords.
 
