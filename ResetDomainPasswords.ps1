@@ -86,10 +86,10 @@ function Invoke-GenerateCSV {
     
     # Get users from AD
     if($SearchBase){
-        $users = Get-Aduser -Filter * -Properties pwdLastSet, name | Select-Object name, SamAccountName, pwdLastSet
+        $users =  Get-Aduser -SearchBase $SearchBase -Filter * -Properties pwdLastSet, name | Select-Object name, SamAccountName, pwdLastSet
     }
     else {
-        $users =  Get-Aduser -SearchBase $SearchBase -Filter * -Properties pwdLastSet, name | Select-Object name, SamAccountName, pwdLastSet
+        $users = Get-Aduser -Filter * -Properties pwdLastSet, name | Select-Object name, SamAccountName, pwdLastSet
     }
 
     # Add random passwords to user object
